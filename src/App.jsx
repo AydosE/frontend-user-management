@@ -3,8 +3,28 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Signup from "./pages/Signup";
 import Auth from "./pages/Auth";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [user, setUser] = useState(null); // Храним данные о пользователе
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch("https://your-backend-url.com/auth/status", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((response) => response.json())
+        .then((data) => setUser(data.user)); // Обновляем состояние
+    }
+  }, []);
+
+  // return (
+  //   <div>
+  //     {user ? <Dashboard /> : <Login />} {/* Переключаем между страницами */}
+  //   </div>
+  // );
+
   return (
     <Router>
       {/* <Routes>
@@ -13,8 +33,11 @@ function App() {
         <Route path="/signup" element={<Signup />} />
       </Routes> */}
       <Routes>
-        <Route path="/" element={<Auth />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        {user ? (
+          <Route path="/" element={<Auth />} />
+        ) : (
+          <Route path="/dashboard" element={<Dashboard />} />
+        )}
       </Routes>
     </Router>
   );

@@ -7,7 +7,7 @@ function convertToLocalTime(utcTime, userTimezone) {
 function lastLogin(date) {
   // console.log(date);
   date = formatDate(date);
-  console.log(date);
+  console.log(date, "lastLogin");
 
   const lastLoginDate = new Date(Date.parse(date));
   const now = new Date();
@@ -36,6 +36,8 @@ function lastLogin(date) {
 }
 
 function formatDate(date) {
+  console.log(date, "formatDate");
+
   const options = {
     month: "long",
     day: "numeric",
