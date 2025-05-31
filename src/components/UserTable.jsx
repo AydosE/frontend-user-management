@@ -1,5 +1,5 @@
 import React from "react";
-import { convertToLocalTime, formatDate } from "../utils/date";
+import { convertToLocalTime, formatDate, lastLogin } from "../utils/date";
 
 const UserTable = ({ users, selectedUsers, setSelectedUsers }) => {
   const handleCheckboxChange = (id) => {
@@ -53,7 +53,7 @@ const UserTable = ({ users, selectedUsers, setSelectedUsers }) => {
               className="p-2 border border-gray-300"
               title={formatDate(user.last_login, user.timezone)}
             >
-              {convertToLocalTime(user.last_login, user.timezone)}
+              {lastLogin(user.last_login, user.timezone)}
             </td>
             <td
               className={`p-2 border border-gray-300 ${
