@@ -1,5 +1,5 @@
 import React from "react";
-import { convertToLocalTime, formatDate, lastLogin } from "../utils/date";
+import { formatDate, lastLogin } from "../utils/date";
 
 const UserTable = ({ users, selectedUsers, setSelectedUsers }) => {
   const handleCheckboxChange = (id) => {
