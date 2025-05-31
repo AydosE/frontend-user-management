@@ -13,7 +13,7 @@ function lastLogin(date) {
 
   console.log(date, "lastLogin");
 
-  const lastLoginDate = date;
+  const lastLoginDate = new Date(date);
   const now = new Date();
   const diffInMs = now - lastLoginDate;
   const diffInSeconds = Math.floor(diffInMs / 1000);
