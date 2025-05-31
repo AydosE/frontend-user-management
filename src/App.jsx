@@ -29,15 +29,15 @@ function App() {
     <Router>
       {/* <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/signup" element={<Signup />} />
-      </Routes> */}
+        </Routes> */}
       <Routes>
         {user ? (
           <Route path="/dashboard" element={<Dashboard />} />
         ) : (
           <Route path="/" element={<Auth />} />
         )}
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
   );
