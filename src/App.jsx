@@ -34,9 +34,9 @@ function App() {
       </Routes> */}
       <Routes>
         {user ? (
-          <Route path="/" element={<Auth />} />
-        ) : (
           <Route path="/dashboard" element={<Dashboard />} />
+        ) : (
+          <Route path="/" element={<Auth />} />
         )}
       </Routes>
     </Router>
