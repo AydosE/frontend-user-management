@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("https://your-backend-url.com/auth/status", {
+      fetch("https://backend-user-management-b6b7.onrender.com/auth/status", {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((response) => response.json())
