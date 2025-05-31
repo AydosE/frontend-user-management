@@ -7,9 +7,13 @@ function convertToLocalTime(utcTime, userTimezone) {
 function lastLogin(date) {
   // console.log(date);
   date = formatDate(date);
+  date = date.replace(" at ", " ");
+  date = new Date(date);
+  date = date.toISOString();
+
   console.log(date, "lastLogin");
 
-  const lastLoginDate = new Date(Date.parse(date));
+  const lastLoginDate = date;
   const now = new Date();
   const diffInMs = now - lastLoginDate;
   const diffInSeconds = Math.floor(diffInMs / 1000);
