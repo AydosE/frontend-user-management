@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { loginUser, registerUser } from "../utils/api";
+import React, { useEffect, useState } from "react";
+import { fetchStatus, loginUser, registerUser } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
@@ -27,6 +27,31 @@ const Auth = () => {
       setError(err.message);
     }
   };
+
+  useEffect(() => {
+    // const token = localStorage.getItem("token");
+    // console.log("Token from localStorage:", token);
+
+    // if (token) {
+    //   fetch("https://backend-user-management-b6b7.onrender.com/auth/status", {
+    //     headers: { Authorization: `Bearer ${token}` },
+    //   })
+    //     .then((response) => response.json())
+    //     .then((data) => console.log(data));
+    // }
+
+    const fetcher = async () => {
+      try {
+        const status = await fetchStatus();
+        if (status.isAuthenticated) {
+          navigate("/dashboard");
+        }
+      } catch (error) {
+        console.error("Ошибка при проверке статуса аутентификации:", error);
+      }
+    };
+    fetcher();
+  }, []);
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">

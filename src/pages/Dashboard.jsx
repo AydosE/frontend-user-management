@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserTable from "../components/UserTable";
-import { fetchUsers } from "../utils/api";
+import { fetchStatus, fetchUsers } from "../utils/api";
 import Toolbar from "../components/ToolBar";
 
 const Dashboard = () => {
@@ -8,9 +8,17 @@ const Dashboard = () => {
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   useEffect(() => {
-    fetchUsers()
-      .then(setUsers)
-      .catch((error) => console.error("Ошибка API:", error));
+    const asyncFetcher = async () => {
+      try {
+        console.log(fetchStatus());
+
+        const data = await fetchUsers();
+        setUsers(data);
+      } catch (error) {
+        console.error("Ошибка при загрузке пользователей:", error);
+      }
+    };
+    asyncFetcher();
   }, []);
 
   return (

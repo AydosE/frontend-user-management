@@ -1,8 +1,6 @@
 import { updateUserStatus, deleteUser, fetchUsers } from "../utils/api";
 
 const Toolbar = ({ selectedUsers, setUsers, setSelectedUsers }) => {
-  console.log(selectedUsers);
-
   const handleBlock = async () => {
     if (!selectedUsers.length) return;
 

@@ -5,13 +5,10 @@ function convertToLocalTime(utcTime, userTimezone) {
 }
 
 function lastLogin(date) {
-  // console.log(date);
   date = formatDate(date);
   date = date.replace(" at ", " ");
   date = new Date(date);
   date = date.toISOString();
-
-  console.log(date, "lastLogin");
 
   const lastLoginDate = new Date(date);
   const now = new Date();
@@ -40,8 +37,6 @@ function lastLogin(date) {
 }
 
 function formatDate(date) {
-  console.log(date, "formatDate");
-
   const options = {
     month: "long",
     day: "numeric",

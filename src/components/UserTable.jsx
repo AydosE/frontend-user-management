@@ -37,7 +37,6 @@ const UserTable = ({ users, selectedUsers, setSelectedUsers }) => {
       <tbody>
         {users.map((user) => (
           <tr key={user.id} className="text-center">
-            {console.log(user.timezone)}
             <td className="p-2 border border-gray-300">
               <input
                 id={user.id}
