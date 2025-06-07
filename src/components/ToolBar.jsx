@@ -1,23 +1,36 @@
-import { updateUserStatus, deleteUser, fetchUsers } from "../utils/api";
+import { useNavigate } from "react-router-dom";
+import {
+  updateUserStatus,
+  deleteUser,
+  fetchUsers,
+  logoutUser,
+} from "../utils/api";
+import { toast } from "react-toastify";
 
 const Toolbar = ({ selectedUsers, setUsers, setSelectedUsers }) => {
+  const navigate = useNavigate();
+
   const handleBlock = async () => {
     if (!selectedUsers.length) return;
 
     try {
-      const responses = await Promise.all(
+      await Promise.all(
         selectedUsers.map((id) => updateUserStatus(id, "blocked"))
       );
-      const allSuccessful = responses.every(
-        (res) => res.message === "Статус обновлён"
-      );
 
-      if (allSuccessful) {
-        fetchUsers().then(setUsers);
+      fetchUsers().then((updatedUsers) => {
+        setUsers(updatedUsers);
         setSelectedUsers([]);
-      }
+
+        const allBlocked = updatedUsers.every(
+          (user) => user.status === "blocked"
+        );
+        if (allBlocked) navigate("/");
+
+        toast.success(`${selectedUsers.length} пользователей заблокированы!`);
+      });
     } catch (error) {
-      console.error("Ошибка блокировки пользователей:", error);
+      toast.error("Ошибка блокировки пользователей!");
     }
   };
 
@@ -25,19 +38,18 @@ const Toolbar = ({ selectedUsers, setUsers, setSelectedUsers }) => {
     if (!selectedUsers.length) return;
 
     try {
-      const responses = await Promise.all(
+      await Promise.all(
         selectedUsers.map((id) => updateUserStatus(id, "active"))
       );
-      const allSuccessful = responses.every(
-        (res) => res.message === "Статус обновлён"
-      );
 
-      if (allSuccessful) {
-        fetchUsers().then(setUsers);
+      fetchUsers().then((updatedUsers) => {
+        setUsers(updatedUsers);
         setSelectedUsers([]);
-      }
+
+        toast.success(`${selectedUsers.length} пользователей разблокированы!`);
+      });
     } catch (error) {
-      console.error("Ошибка разблокировки пользователей:", error);
+      toast.error("Ошибка разблокировки пользователей!");
     }
   };
 
@@ -45,41 +57,50 @@ const Toolbar = ({ selectedUsers, setUsers, setSelectedUsers }) => {
     if (!selectedUsers.length) return;
 
     try {
-      const responses = await Promise.all(
-        selectedUsers.map((id) => deleteUser(id))
-      );
-      const allSuccessful = responses.every(
-        (res) => res.message === "Пользователь удалён"
-      );
+      await Promise.all(selectedUsers.map((id) => deleteUser(id)));
 
-      if (allSuccessful) {
-        fetchUsers().then(setUsers);
+      fetchUsers().then((updatedUsers) => {
+        setUsers(updatedUsers);
         setSelectedUsers([]);
-      }
+
+        toast.success(`${selectedUsers.length} пользователей удалены!`);
+      });
     } catch (error) {
-      console.error("Ошибка удаления пользователей:", error);
+      toast.error("Ошибка удаления пользователей!");
     }
   };
 
+  const handleLogout = () => {
+    logoutUser(navigate);
+  };
+
   return (
-    <div className="flex gap-3 p-4">
+    <div className="flex gap-3 p-4 w-full justify-between">
+      <div className="flex gap-3">
+        <button
+          className="bg-red-500 text-white px-4 py-2 rounded"
+          onClick={handleBlock}
+        >
+          Block
+        </button>
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded"
+          onClick={handleUnblock}
+        >
+          Unblock
+        </button>
+        <button
+          className="bg-gray-700 text-white px-4 py-2 rounded"
+          onClick={handleDelete}
+        >
+          Delete
+        </button>
+      </div>
       <button
-        className="bg-red-500 text-white px-4 py-2 rounded"
-        onClick={handleBlock}
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+        onClick={handleLogout}
       >
-        Block
-      </button>
-      <button
-        className="bg-green-500 text-white px-4 py-2 rounded"
-        onClick={handleUnblock}
-      >
-        Unblock
-      </button>
-      <button
-        className="bg-gray-700 text-white px-4 py-2 rounded"
-        onClick={handleDelete}
-      >
-        Delete
+        Logout
       </button>
     </div>
   );

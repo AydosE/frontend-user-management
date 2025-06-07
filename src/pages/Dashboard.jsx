@@ -10,8 +10,6 @@ const Dashboard = () => {
   useEffect(() => {
     const asyncFetcher = async () => {
       try {
-        console.log(fetchStatus());
-
         const data = await fetchUsers();
         setUsers(data);
       } catch (error) {
@@ -22,20 +20,28 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-4">User Management</h1>
-      <Toolbar
-        users={users}
-        setUsers={setUsers}
-        selectedUsers={selectedUsers}
-        setSelectedUsers={setSelectedUsers}
-      />
-      <UserTable
-        users={users}
-        selectedUsers={selectedUsers}
-        setSelectedUsers={setSelectedUsers}
-      />
-    </div>
+    <>
+      {users.length === 0 ? (
+        <h1 className="text-blue-500 text-center text-lg font-bold m-20">
+          Loading...
+        </h1>
+      ) : (
+        <div className="p-6">
+          <h1 className="text-3xl font-bold mb-4">User Management</h1>
+          <Toolbar
+            users={users}
+            setUsers={setUsers}
+            selectedUsers={selectedUsers}
+            setSelectedUsers={setSelectedUsers}
+          />
+          <UserTable
+            users={users}
+            selectedUsers={selectedUsers}
+            setSelectedUsers={setSelectedUsers}
+          />
+        </div>
+      )}
+    </>
   );
 };
 

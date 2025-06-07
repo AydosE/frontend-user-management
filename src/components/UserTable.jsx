@@ -9,9 +9,9 @@ const UserTable = ({ users, selectedUsers, setSelectedUsers }) => {
   };
 
   return (
-    <table className="w-full border-collapse border border-gray-300">
-      <thead>
-        <tr className="bg-gray-100">
+    <table className="w-full border border-gray-300 rounded-lg shadow-md overflow-hidden">
+      <thead className="bg-gray-100 rounded-t-lg">
+        <tr>
           <th className="p-2 border border-gray-300">
             <input
               type="checkbox"
@@ -34,9 +34,12 @@ const UserTable = ({ users, selectedUsers, setSelectedUsers }) => {
         </tr>
       </thead>
 
-      <tbody>
+      <tbody className="rounded-b-lg">
         {users.map((user) => (
-          <tr key={user.id} className="text-center">
+          <tr
+            key={user.id}
+            className="text-center even:bg-gray-100 odd:bg-white"
+          >
             <td className="p-2 border border-gray-300">
               <input
                 id={user.id}
@@ -55,7 +58,7 @@ const UserTable = ({ users, selectedUsers, setSelectedUsers }) => {
               {lastLogin(user.last_login, user.timezone)}
             </td>
             <td
-              className={`p-2 border border-gray-300 ${
+              className={`p-2 border border-gray-300 font-bold ${
                 user.status === "blocked" ? "text-red-600" : "text-green-600"
               }`}
             >

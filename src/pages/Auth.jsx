@@ -28,30 +28,19 @@ const Auth = () => {
     }
   };
 
-  useEffect(() => {
-    // const token = localStorage.getItem("token");
-    // console.log("Token from localStorage:", token);
-
-    // if (token) {
-    //   fetch("https://backend-user-management-b6b7.onrender.com/auth/status", {
-    //     headers: { Authorization: `Bearer ${token}` },
-    //   })
-    //     .then((response) => response.json())
-    //     .then((data) => console.log(data));
-    // }
-
-    const fetcher = async () => {
-      try {
-        const status = await fetchStatus();
-        if (status.isAuthenticated) {
-          navigate("/dashboard");
-        }
-      } catch (error) {
-        console.error("Ошибка при проверке статуса аутентификации:", error);
-      }
-    };
-    fetcher();
-  }, []);
+  // useEffect(() => {
+  //   const fetcher = async () => {
+  //     try {
+  //       const status = await fetchStatus();
+  //       if (status.isAuthenticated) {
+  //         navigate("/dashboard");
+  //       }
+  //     } catch (error) {
+  //       console.error("Ошибка при проверке статуса аутентификации:", error);
+  //     }
+  //   };
+  //   fetcher();
+  // }, []);
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -59,7 +48,6 @@ const Auth = () => {
         <h1 className="text-2xl font-bold mb-4 text-center">
           {isLogin ? "Вход" : "Регистрация"}
         </h1>
-        {error && <p className="text-red-500 text-center">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
           {!isLogin && (
             <input
